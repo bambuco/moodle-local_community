@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_community/communities
+
+    The community list.
+
+    Example context (json):
+    {
+        "attributes": [
+            "communities": [],
+            "baseurl": "https://localhost.aca",
+            "morecommunities": true
+        ]
+    }
+}}
+
+<div class="local_community-communitieslist">
+    <div class="row">
+        {{#communities}}
+        <div class="col-md-3">
+            {{> local_community/community}}
+        </div>
+        {{/communities}}
+    </div>
+    {{#morecommunities}}
+        <div class="row buttons">
+            <div class="col-md-12">
+                <a href="{{baseurl}}/local/community/edit.php?u={{userid}}" class="btn btn-primary">
+                    {{#pix}} t/add {{/pix}} {{#str}}newcommunity, local_community{{/str}}
+                </a>
+            </div>
+        </div>
+    {{/morecommunities}}
+</div>

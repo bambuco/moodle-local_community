@@ -1,0 +1,64 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_community/community
+
+    Template for show a community.
+
+    Example context (json):
+    {
+        "attributes": [
+            "name": "My community",
+            "description": "My community description",
+            "idnumber": "123456",
+            "email": "communityemail@example.com",
+            "bannerurl": "https://example.com/banner.jpg",
+            "phone": "123456789",
+        ]
+    }
+}}
+
+<div class="card mb-4 mr-2 one-community">
+    <h3 class="card-header">{{name}}</h3>
+    <div class="card-body">
+        {{description}}
+    </div>
+    <div class="community-banner" style="background-image: url({{{bannerurl}}});">
+    </div>
+    <ul class="list-group list-group-flush">
+        {{#editable}}<li class="list-group-item">{{idnumber}}</li>{{/editable}}
+        <li class="list-group-item">{{email}}</li>
+        {{#phone}}<li class="list-group-item">{{phone}}</li>{{/phone}}
+        {{#address}}<li class="list-group-item">{{address}}</li>{{/address}}
+        <li class="list-group-item">
+            <label>{{#str}}createdby, local_community{{/str}}</label>
+            {{#owner}}
+                <a href="{{profileurl}}">{{fullname}}</a>
+            {{/owner}}
+        </li>
+    </ul>
+    {{#editable}}
+        <div class="card-footer">
+            <a href="{{baseurl}}/local/community/edit.php?id={{id}}" class="btn btn-primary">
+                {{#pix}} t/edit {{/pix}} {{#str}} edit {{/str}}
+            </a>
+            <a href="{{baseurl}}/local/community/index.php?delete={{id}}&sesskey={{sesskey}}" class="btn btn-danger">
+                {{#pix}} t/delete {{/pix}} {{#str}} delete {{/str}}
+            </a>
+        </div>
+    {{/editable}}
+</div>

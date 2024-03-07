@@ -77,6 +77,19 @@ class communities implements renderable, templatable {
             if ($fulleditable || $community->userid == $USER->id) {
                 $community->editable = true;
             }
+
+            if ($community->cohortid) {
+                $cohort = $DB->get_record('cohort', ['id' => $community->cohortid]);
+
+                if (empty($cohort) || $cohort->visible == 0) {
+                    $community->disabledbycohort = true;
+                } else {
+                }
+
+                if (!empty($cohort)) {
+                    $community->memberscount = $DB->count_records('cohort_members', ['cohortid' => $community->cohortid]);;
+                }
+            }
         }
 
         $config = get_config('local_community');

@@ -77,6 +77,13 @@ class community extends moodleform {
         $mform->addElement('text', 'address', get_string('address'));
         $mform->setType('address', PARAM_TEXT);
 
+        $mform->addElement('text', 'registercode', get_string('registercode', 'local_community'));
+        $mform->setType('registercode', PARAM_TEXT);
+
+        $mform->addElement('checkbox', 'public', get_string('public', 'local_community'));
+        $mform->setType('public', PARAM_INT);
+        $mform->addHelpButton('public', 'public', 'local_community');
+
         $mform->addElement('hidden', 'id', null);
         $mform->setType('id', PARAM_INT);
 

@@ -81,15 +81,15 @@ if ($community) {
     $community->banner = $draftitemid;
 }
 
+$returnparams = $USER->id == $community->userid ? [] : ['u' => $community->userid];
 $form = new \local_community\forms\community(null, $data);
 if ($form->is_cancelled()) {
-    $url = new moodle_url($CFG->wwwroot . '/local/community/index.php');
+    $url = new moodle_url($CFG->wwwroot . '/local/community/index.php', $returnparams);
     redirect($url);
 } else if ($data = $form->get_data()) {
     if (!$community) {
         $community = new stdClass();
         $community->userid = $userid;
-        $community->timecreated = time();
     }
 
     $community->name = $data->name;
@@ -98,9 +98,11 @@ if ($form->is_cancelled()) {
     $community->email = $data->email;
     $community->phone = $data->phone;
     $community->address = $data->address;
-    $community->timemodified = time();
+    $community->registercode = $data->registercode;
+    $community->public = $data->public;
 
     if ($id) {
+        $community->timemodified = time();
         $DB->update_record('local_community', $community);
 
         $event = \local_community\event\community_updated::create(array(
@@ -109,20 +111,13 @@ if ($form->is_cancelled()) {
         ));
         $event->trigger();
     } else {
-        $id = $DB->insert_record('local_community', $community, true);
-
-        $event = \local_community\event\community_created::create(array(
-            'objectid' => $id,
-            'context' => $syscontext,
-        ));
-        $event->trigger();
+        $id = \local_community\community::create($community);
     }
 
     file_save_draft_area_files($data->banner, $syscontext->id, 'local_community', 'communitybanner',
                                 $id, $filemanageroptions);
 
-    $params = $USER->id == $community->userid ? [] : ['u' => $community->userid];
-    $url = new moodle_url($CFG->wwwroot . '/local/community/index.php', $params);
+    $url = new moodle_url($CFG->wwwroot . '/local/community/index.php', $returnparams);
     redirect($url);
 }
 

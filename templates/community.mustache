@@ -32,7 +32,7 @@
     }
 }}
 
-<div class="card mb-4 mr-2 one-community">
+<div class="card mb-4 mr-2 one-community {{#disabledbycohort}}text-muted{{/disabledbycohort}}">
     <h3 class="card-header">{{name}}</h3>
     <div class="card-body">
         {{description}}
@@ -41,14 +41,28 @@
     </div>
     <ul class="list-group list-group-flush">
         {{#editable}}<li class="list-group-item">{{idnumber}}</li>{{/editable}}
-        <li class="list-group-item">{{email}}</li>
+        {{#email}}<li class="list-group-item">{{email}}</li>{{/email}}
         {{#phone}}<li class="list-group-item">{{phone}}</li>{{/phone}}
         {{#address}}<li class="list-group-item">{{address}}</li>{{/address}}
+        <li class="list-group-item">
+            {{#public}}
+                {{#str}} public, local_community {{/str}}
+                {{#registercode}}<em>{{#str}} useregistercode, local_community {{/str}}</em>{{/registercode}}
+                <br />
+                {{#disabledbycohort}}<strong>{{#str}} notapprovedyet, local_community {{/str}}</strong>{{/disabledbycohort}}
+            {{/public}}
+            {{^public}}
+                {{#str}} private, local_community {{/str}}
+            {{/public}}
+        </li>
         <li class="list-group-item">
             <label>{{#str}}createdby, local_community{{/str}}</label>
             {{#owner}}
                 <a href="{{profileurl}}">{{fullname}}</a>
             {{/owner}}
+        </li>
+        <li class="list-group-item">
+            <label>{{#str}}memberscount, local_community, {{{memberscount}}}{{/str}}</label>
         </li>
     </ul>
     {{#editable}}

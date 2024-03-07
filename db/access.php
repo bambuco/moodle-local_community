@@ -43,4 +43,12 @@ $capabilities = [
             'user' => CAP_ALLOW,
         ],
     ],
+
+    'local/community:autopublish' => [
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => [
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 ];

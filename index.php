@@ -68,22 +68,7 @@ if ($delete && confirm_sesskey()) {
         die;
     } else if (data_submitted()) {
 
-        $fs = get_file_storage();
-        $files = $fs->get_area_files($syscontext->id, 'local_community', 'communitybanner', $community->id);
-
-        foreach ($files as $file) {
-            $file->delete();
-        }
-
-        $DB->delete_records('local_community', ['id' => $community->id]);
-
-        $event = \local_community\event\community_deleted::create(array(
-            'objectid' => $community->id,
-            'context' => $syscontext
-        ));
-        $event->add_record_snapshot('local_community', $community);
-        $event->trigger();
-
+        \local_community\community::delete($community);
         $msg = 'communitydeleted';
     }
 }

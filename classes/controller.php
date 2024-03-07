@@ -31,4 +31,28 @@ namespace local_community;
  */
 class controller {
 
+    /**
+     * Get the public communities.
+     *
+     * @return array
+     */
+    public static function get_publiccommunities() {
+        global $DB;
+        $records = $DB->get_records('local_community', ['public' => 1], 'name');
+
+        foreach ($records as $key => $record) {
+            if (empty($record->cohortid)) {
+                unset($records[$key]);
+            }
+
+            $cohort = $DB->get_record('cohort', ['id' => $record->cohortid]);
+
+            // Only visible cohorts are available to link.
+            if (empty($cohort) || $cohort->visible == 0) {
+                unset($records[$key]);
+            }
+        }
+
+        return $records;
+    }
 }

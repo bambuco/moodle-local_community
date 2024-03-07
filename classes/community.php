@@ -161,4 +161,26 @@ class community {
             }
         }
     }
+
+    /**
+     * Get the members of a community.
+     *
+     * @param id|object $community The community data or the community id.
+     * @return array The members of the community.
+     */
+    public static function get_members($community) : array {
+        global $DB;
+
+        if (is_int($community)) {
+            $community = $DB->get_record('local_community', ['id' => $community], 'id, cohortid', MUST_EXIST);
+        }
+
+        $members = $DB->get_records_sql("SELECT u.*
+                                        FROM {user} u
+                                        INNER JOIN {cohort_members} cm ON u.id = cm.userid
+                                        WHERE cm.cohortid = :cohortid", ['cohortid' => $community->cohortid]);
+
+        return $members;
+    }
+
 }

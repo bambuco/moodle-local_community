@@ -27,6 +27,13 @@
  * Custom uninstallation procedure.
  */
 function xmldb_local_community_uninstall() {
+    global $DB;
+
+    $communities = $DB->get_records('local_community');
+
+    foreach ($communities as $community) {
+        \local_community\community::delete($community);
+    }
 
     return true;
 }

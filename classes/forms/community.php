@@ -54,7 +54,7 @@ class community extends moodleform {
         $filemanageroptions = $this->_customdata['filemanageroptions'];
         $userid = $this->_customdata['userid'];
 
-        $mform->addElement('text', 'name', get_string('name', 'local_community'));
+        $mform->addElement('text', 'name', get_string('name', 'local_community'), ['maxlength' => 255]);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
@@ -64,20 +64,20 @@ class community extends moodleform {
         $mform->addElement('filemanager', 'banner', get_string('banner', 'local_community'), null, $filemanageroptions);
         $mform->addHelpButton('banner', 'banner', 'local_community');
 
-        $mform->addElement('text', 'idnumber', get_string('idnumber'));
+        $mform->addElement('text', 'idnumber', get_string('idnumber'), ['maxlength' => 63]);
         $mform->setType('idnumber', PARAM_TEXT);
         $mform->addRule('idnumber', null, 'required', null, 'client');
 
-        $mform->addElement('text', 'email', get_string('email'));
+        $mform->addElement('text', 'email', get_string('email'), ['maxlength' => 127]);
         $mform->setType('email', PARAM_EMAIL);
 
-        $mform->addElement('text', 'phone', get_string('phone', 'local_community'));
+        $mform->addElement('text', 'phone', get_string('phone', 'local_community'), ['maxlength' => 31]);
         $mform->setType('phone', PARAM_TEXT);
 
-        $mform->addElement('text', 'address', get_string('address'));
+        $mform->addElement('text', 'address', get_string('address'), ['maxlength' => 255]);
         $mform->setType('address', PARAM_TEXT);
 
-        $mform->addElement('text', 'registercode', get_string('registercode', 'local_community'));
+        $mform->addElement('text', 'registercode', get_string('registercode', 'local_community'), ['maxlength' => 63]);
         $mform->setType('registercode', PARAM_TEXT);
 
         $mform->addElement('checkbox', 'public', get_string('public', 'local_community'));

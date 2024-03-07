@@ -146,13 +146,18 @@ class community {
             $DB->delete_records('local_community', ['id' => $community->id]);
 
             if ($community->cohortid) {
-                cohort_remove_member($community->cohortid, $event->objectid);
-                cohort_update_cohort((object)[
-                    'id' => $community->cohortid,
-                    'visible' => 0,
-                    'name' => 'd-' . $community->name,
-                    'idnumber' => 'd-' . $community->idnumber,
-                ]);
+                $cohort = $DB->get_record('cohort', ['id' => $community->cohortid]);
+
+                if ($cohort) {
+                    cohort_remove_member($community->cohortid, $event->objectid);
+                    cohort_update_cohort((object)[
+                        'id' => $community->cohortid,
+                        'visible' => 0,
+                        'name' => 'd-' . $cohort->name,
+                        'idnumber' => (empty($cohort->idnumber) ? '' : 'd-' . $cohort->idnumber),
+                        'contextid' => $cohort->contextid,
+                    ]);
+                }
             }
         }
     }

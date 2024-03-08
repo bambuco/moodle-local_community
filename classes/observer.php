@@ -71,4 +71,6 @@ class observer {
 
     //ToDo: Controlar cuando se elimina un usuario que no ha sido confirmado ¿ingresa por el evento user_deleted?
 
+    //ToDo: Enviar mensaje cuando se apruebe la cohorte que es lo que hace que la Comunidad se pueda poner pública.
+
 }

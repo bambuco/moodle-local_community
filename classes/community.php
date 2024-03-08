@@ -106,6 +106,8 @@ class community {
 
         $id = $DB->insert_record('local_community', $community, true);
 
+        //ToDo: enviar un mensaje al administrador de que se ha creado una comunidad, por si require aprobarla.
+
         $event = \local_community\event\community_created::create(array(
             'objectid' => $id,
             'context' => $syscontext,

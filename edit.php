@@ -81,7 +81,12 @@ if ($community) {
     $community->banner = $draftitemid;
 }
 
-$returnparams = $USER->id == $community->userid ? [] : ['u' => $community->userid];
+if (empty($community)) {
+    $returnparams = [];
+} else {
+    $returnparams = $USER->id == $community->userid ? [] : ['u' => $community->userid];
+}
+
 $form = new \local_community\forms\community(null, $data);
 if ($form->is_cancelled()) {
     $url = new moodle_url($CFG->wwwroot . '/local/community/index.php', $returnparams);
@@ -99,7 +104,7 @@ if ($form->is_cancelled()) {
     $community->phone = $data->phone;
     $community->address = $data->address;
     $community->registercode = $data->registercode;
-    $community->public = $data->public;
+    $community->public = empty($data->public) ? 0 : $data->public;
 
     if ($id) {
         $community->timemodified = time();

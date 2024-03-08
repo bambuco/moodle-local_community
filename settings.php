@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 if ($hassiteconfig) {
     $settings = new admin_category('local_community', get_string('pluginname', 'local_community'));
     $ADMIN->add('root', $settings, 'competencies');
-    $generalsettings = new admin_settingpage('local_community_general', get_string('generalsettings', 'block_ludifica'));
+    $generalsettings = new admin_settingpage('local_community_general', get_string('generalsettings', 'local_community'));
 
     $ADMIN->add('local_community', new admin_externalpage('local_community_view',
                                                             new lang_string('communitieslist', 'local_community'),

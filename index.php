@@ -78,6 +78,12 @@ if (!empty($msg)) {
     echo $OUTPUT->notification($msg, 'notifysuccess');
 }
 
+$validuser = $DB->record_exists('user', ['id' => $userid, 'deleted' => 0], 'id', MUST_EXIST);
+
+if (!$validuser) {
+    throw new moodle_exception('invaliduser', 'local_community');
+}
+
 $list = $DB->get_records('local_community', ['userid' => $userid], 'name');
 
 $renderable = new \local_community\output\communities($list, $userid);

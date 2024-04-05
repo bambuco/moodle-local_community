@@ -153,9 +153,15 @@ class community extends base {
                 ON {$communityalias}.cohortid = {$chmembersalias}.cohortid")
             ->add_join("INNER JOIN {user} {$useralias}
                 ON {$useralias}.id = {$chmembersalias}.userid")
-            ->add_fields("$useralias.firstname")
+            ->add_fields("$useralias.firstname, $useralias.id")
             ->set_type(column::TYPE_TEXT)
-            ->set_is_sortable(true);
+            ->set_is_sortable(true)
+            ->set_callback(static function(?string $firstname, object $obj): string {
+                return \html_writer::link(new \moodle_url('/user/profile.php',
+                                        ['id' => $obj->id]),
+                                        $firstname,
+                                        ['target' => '_blank']);
+            });
 
         $columns[] = (new column(
             'userlastname',

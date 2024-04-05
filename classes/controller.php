@@ -55,4 +55,23 @@ class controller {
 
         return $records;
     }
+
+    /**
+     * Get the user communities.
+     *
+     * @param int $userid The user id.
+     * @return array
+     */
+    public static function get_usercommunities(int $userid) : array {
+        global $DB;
+
+        $sql = "SELECT c.*
+                    FROM {local_community} c
+                    INNER JOIN {cohort} ch ON ch.id = c.cohortid
+                    INNER JOIN {cohort_members} chm ON chm.cohortid = ch.id AND chm.userid = :userid
+                ORDER BY c.name";
+        $list = $DB->get_records_sql($sql, ['userid' => $userid]);
+
+        return $list;
+    }
 }

@@ -40,10 +40,12 @@ if (isguestuser()) {
     die();
 }
 
+$community = $DB->get_record('local_community', ['id' => $id], '*', MUST_EXIST);
+
 $PAGE->set_context($systemcontext);
 $PAGE->set_url('/local/community/members.php');
 $PAGE->set_title(get_string('memberslist', 'local_community'));
-$PAGE->set_heading(get_string('memberslist', 'local_community'));
+$PAGE->set_heading(get_string('memberslist', 'local_community') . ' - ' . $community->name);
 
 if ($inpopup) {
     $PAGE->set_pagelayout('popup');
@@ -52,8 +54,6 @@ if ($inpopup) {
 }
 
 echo $OUTPUT->header();
-
-$community = $DB->get_record('local_community', ['id' => $id], '*', MUST_EXIST);
 
 if (empty($community->cohortid)) {
     throw new moodle_exception('notcohortincommunity', 'local_community');
@@ -70,10 +70,5 @@ $report = system_report_factory::create(local_community\systemreports\members::c
                                             'local_community', 'members', $id, ['communityid' => $community->id]);
 
 echo $report->output();
-
-echo html_writer::empty_tag('hr');
-echo html_writer::link(new moodle_url('/local/community/index.php', ['u' => $community->userid]),
-                        get_string('back'), ['class' => 'btn btn-primary']);
-
 
 echo $OUTPUT->footer();

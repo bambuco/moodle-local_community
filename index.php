@@ -84,7 +84,7 @@ if (!$validuser) {
     throw new moodle_exception('invaliduser', 'local_community');
 }
 
-$list = $DB->get_records('local_community', ['userid' => $userid], 'name');
+$list = \local_community\controller::get_usercommunities($userid);
 
 $renderable = new \local_community\output\communities($list, $userid);
 $renderer = $PAGE->get_renderer('local_community');

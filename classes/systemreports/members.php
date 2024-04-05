@@ -19,7 +19,8 @@ namespace local_community\systemreports;
 use local_community\entities\community;
 use core_reportbuilder\local\helpers\database;
 use core_reportbuilder\system_report;
-use core_reportbuilder\local\report\action;
+
+require_once($CFG->dirroot . '/cohort/lib.php');
 
 /**
  * Community members report.
@@ -111,7 +112,6 @@ class members extends system_report {
      */
     public function add_columns(): void {
         $columns = [
-            'community:useridlink',
             'community:userfirstname',
             'community:userlastname',
             'community:membersince',

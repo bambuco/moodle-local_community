@@ -56,7 +56,8 @@ $config = get_config('local_community');
 $currentcommunities = $DB->count_records('local_community', ['userid' => $userid]);
 $maxcommunities = (int)$config->maxcommunities;
 
-if ($currentcommunities >= $maxcommunities) {
+// If is a new community and the user has reached the maximum number of communities.
+if (!$community && $currentcommunities >= $maxcommunities) {
     throw new moodle_exception('maxcommunitiesreached', 'local_community');
 }
 

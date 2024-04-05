@@ -74,4 +74,18 @@ class controller {
 
         return $list;
     }
+
+    /**
+     * Get all communities.
+     *
+     * @return array
+     */
+    public static function get_communities() : array {
+        global $DB;
+
+        $list = $DB->get_records('local_community', [], 'name');
+
+        return $list;
+    }
+
 }

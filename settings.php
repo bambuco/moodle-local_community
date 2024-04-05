@@ -32,7 +32,7 @@ if ($hassiteconfig) {
 
     $ADMIN->add('local_community', new admin_externalpage('local_community_view',
                                                             new lang_string('communitieslist', 'local_community'),
-                                                            "$CFG->wwwroot/local/community/index.php"));
+                                                            "$CFG->wwwroot/local/community/index.php?all=1"));
 
 
 

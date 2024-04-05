@@ -27,8 +27,13 @@ require_once('../../config.php');
 $userid = optional_param('u', $USER->id, PARAM_INT);
 $delete = optional_param('delete', 0, PARAM_INT);
 $confirm = optional_param('confirm', '', PARAM_ALPHANUM);
+$all = optional_param('all', 0, PARAM_INT);
 
 require_login(null, false);
+
+if ($all) {
+    require_capability('local/community:manage', context_system::instance());
+}
 
 if ($userid != $USER->id) {
     require_capability('local/community:manage', context_system::instance());
@@ -84,7 +89,11 @@ if (!$validuser) {
     throw new moodle_exception('invaliduser', 'local_community');
 }
 
-$list = \local_community\controller::get_usercommunities($userid);
+if ($all) {
+    $list = \local_community\controller::get_communities();
+} else {
+    $list = \local_community\controller::get_usercommunities($userid);
+}
 
 $renderable = new \local_community\output\communities($list, $userid);
 $renderer = $PAGE->get_renderer('local_community');

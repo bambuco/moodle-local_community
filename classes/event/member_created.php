@@ -25,6 +25,12 @@ namespace local_community\event;
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class member_created extends \core\event\base {
-
-    // For more information about the Events API please visit {@link https://docs.moodle.org/dev/Events_API}.
+    /**
+     * Init method.
+     */
+    protected function init() {
+        $this->data['objecttable'] = 'local_community';
+        $this->data['crud'] = 'c';
+        $this->data['edulevel'] = self::LEVEL_OTHER;
+    }
 }

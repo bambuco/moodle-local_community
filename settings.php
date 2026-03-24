@@ -30,19 +30,22 @@ if ($hassiteconfig) {
     $ADMIN->add('root', $settings, 'competencies');
     $generalsettings = new admin_settingpage('local_community_general', get_string('generalsettings', 'local_community'));
 
-    $ADMIN->add('local_community', new admin_externalpage('local_community_view',
-                                                            new lang_string('communitieslist', 'local_community'),
-                                                            "$CFG->wwwroot/local/community/index.php?all=1"));
-
-
+    $ADMIN->add('local_community', new admin_externalpage(
+        'local_community_view',
+        new lang_string('communitieslist', 'local_community'),
+        "$CFG->wwwroot/local/community/index.php?all=1"
+    ));
 
     // General setting.
     $list = range(1, 10);
     $list = array_combine($list, $list);
-    $generalsettings->add(new admin_setting_configselect('local_community/maxcommunities',
-                                    new lang_string('maxcommunities', 'local_community'),
-                                    new lang_string('maxcommunities_help', 'local_community'),
-                                    '', $list));
+    $generalsettings->add(new admin_setting_configselect(
+        'local_community/maxcommunities',
+        new lang_string('maxcommunities', 'local_community'),
+        new lang_string('maxcommunities_help', 'local_community'),
+        0,
+        $list
+    ));
 
     $settings->add('local_community', $generalsettings);
 }
